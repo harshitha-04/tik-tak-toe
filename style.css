@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+h1 {
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.status {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255,255,255,0.9);
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+    perspective: 1000px;
+}
+
+.cell {
+    width: 110px;
+    height: 110px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    position: relative;
+}
+
+.cell:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.cell.x {
+    color: #ef4444;
+    text-shadow: 2px 2px 4px rgba(239,68,68,0.2);
+}
+
+.cell.o {
+    color: #3b82f6;
+    text-shadow: 2px 2px 4px rgba(59,130,246,0.2);
+}
+
+.cell.winner {
+    background: rgba(163, 230, 53, 0.2);
+    animation: winnerPulse 1s ease infinite;
+}
+
+@keyframes winnerPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+#restartButton {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+#restartButton:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+@media screen and (max-width: 480px) {
+    .cell {
+        width: 90px;
+        height: 90px;
+        font-size: 3rem;
+    }
+}
+
+/* New hover effect for empty cells */
+.cell:not(.x):not(.o):hover::after {
+    content: attr(data-hover-mark);
+    position: absolute;
+    opacity: 0.3;
+    font-size: 3.5rem;
+}
